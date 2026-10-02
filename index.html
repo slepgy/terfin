@@ -1,0 +1,533 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Теория финансов · конспект</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:wght@500;700&family=PT+Sans:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: sticky section bar + single reading column (~70ch); tasks as ledger rows, solutions fold open */
+:root{
+  --bg:#f5f7f6; --surface:#ffffff; --ink:#15232b; --muted:#56666e; --line:#d5dedb;
+  --accent:#1d6b57; --accent-soft:#e2efea; --gold:#9a6b12; --gold-soft:#f6edd9;
+  --ok:#1f7a3f; --bad:#b23a2e;
+  --f-display:"Spectral",Georgia,"Times New Roman",serif;
+  --f-body:"PT Sans","Segoe UI",Arial,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0f1719; --surface:#162124; --ink:#e3ebe8; --muted:#97a8a6; --line:#2a3a3d;
+  --accent:#5fc3a4; --accent-soft:#1a3530; --gold:#e0b25a; --gold-soft:#33291a;
+  --ok:#5fcf86; --bad:#f08374; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f1719; --surface:#162124; --ink:#e3ebe8; --muted:#97a8a6; --line:#2a3a3d;
+  --accent:#5fc3a4; --accent-soft:#1a3530; --gold:#e0b25a; --gold-soft:#33291a;
+  --ok:#5fcf86; --bad:#f08374; color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:64px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{background:var(--bg);color:var(--ink);font:17px/1.6 var(--f-body);margin:0}
+.wrap{max-width:780px;margin:0 auto;padding-inline:20px;padding-block:0 80px}
+nav.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+nav.bar .in{max-width:780px;margin:0 auto;padding-inline:20px;display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}
+nav.bar a{flex:none;font:600 13px/1 var(--f-mono);letter-spacing:.02em;color:var(--muted);text-decoration:none;padding:16px 10px 14px;border-bottom:2px solid transparent}
+nav.bar a:hover,nav.bar a:focus-visible{color:var(--accent);border-bottom-color:var(--accent);outline:none}
+header.hero{padding-block:56px 28px;border-bottom:1px solid var(--line)}
+.eyebrow{font:600 12px/1.3 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1.2;margin:0}
+h1{font-size:clamp(2.2rem,6vw,3.3rem);font-weight:700;margin-top:10px}
+h2{font-size:1.9rem;font-weight:700}
+h3{font-size:1.25rem;font-weight:600;margin-top:34px}
+.lead{color:var(--muted);font-size:1.1rem;max-width:60ch;margin-top:14px}
+section.part{padding-top:56px}
+section.part>.head{display:flex;flex-direction:column;gap:6px;padding-bottom:10px;border-bottom:2px solid var(--ink);margin-bottom:8px}
+p{margin:12px 0}
+ul,ol{padding-left:1.3em;margin:10px 0}
+li{margin:4px 0}
+a{color:var(--accent)}
+.meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:24px}
+.meta div{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:14px 16px}
+.meta b{display:block;font:600 11px/1.3 var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.grade{display:flex;flex-wrap:wrap;height:34px;border-radius:4px;overflow:hidden;margin-top:14px;font:600 12px/34px var(--f-mono);color:#fff}
+.grade span{padding-inline:10px;white-space:nowrap;overflow:hidden}
+.toc{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0;border-top:1px solid var(--line);margin-top:20px}
+.toc div{padding:12px 0;border-bottom:1px solid var(--line);display:flex;gap:12px}
+.toc .n{font:600 13px/1.6 var(--f-mono);color:var(--accent);min-width:22px}
+.toc .s{font-size:.9rem;color:var(--muted)}
+.f{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--accent);padding:12px 16px;margin:14px 0;overflow-x:auto;border-radius:0 6px 6px 0}
+.f math{font-size:1.15em}
+.f .cap{font-size:.88rem;color:var(--muted);margin-top:6px}
+math{font-family:"Latin Modern Math","STIX Two Math","Cambria Math",serif}
+.note{background:var(--gold-soft);border-radius:6px;padding:12px 16px;margin:16px 0;font-size:.95rem}
+.note b{color:var(--gold)}
+.tbl{overflow-x:auto;margin:14px 0}
+table{border-collapse:collapse;font-variant-numeric:tabular-nums;font-size:.95rem;min-width:100%}
+th,td{border-bottom:1px solid var(--line);padding:8px 12px;text-align:left;white-space:nowrap}
+th{font:600 12px/1.3 var(--f-mono);letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+td.r,th.r{text-align:right}
+.timeline{border-left:2px solid var(--line);margin:16px 0 0 6px;padding-left:20px;display:flex;flex-direction:column;gap:14px}
+.timeline div{position:relative}
+.timeline div::before{content:"";position:absolute;left:-27px;top:7px;width:12px;height:12px;border-radius:50%;background:var(--bg);border:2px solid var(--accent)}
+.timeline .y{font:600 13px var(--f-mono);color:var(--accent)}
+.task{border-top:1px solid var(--line);padding-block:20px 6px}
+.task h3{margin-top:0;font-size:1.15rem}
+.task .ans{display:inline-block;font:600 13px/1.4 var(--f-mono);background:var(--accent-soft);color:var(--accent);padding:4px 10px;border-radius:4px;margin-top:4px}
+details{margin:12px 0}
+summary{cursor:pointer;font:600 14px/1.4 var(--f-mono);color:var(--accent);padding:8px 0;list-style:none;display:inline-flex;gap:8px;align-items:center}
+summary::-webkit-details-marker{display:none}
+summary::before{content:"+";display:inline-grid;place-items:center;width:20px;height:20px;border:1.5px solid var(--accent);border-radius:4px;font-size:14px}
+details[open] summary::before{content:"−"}
+summary:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.sol{border-left:2px solid var(--line);padding-left:16px;margin-left:9px}
+.sol ol{padding-left:1.1em}
+.sol .step{font:600 12px var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-top:14px}
+.econ{font-style:italic;color:var(--muted)}
+.tf{display:flex;flex-direction:column;gap:0;margin-top:10px}
+.tf .row{border-bottom:1px solid var(--line);padding:14px 0}
+.tf .q{display:flex;gap:12px}
+.tf .q .n{font:600 13px/1.7 var(--f-mono);color:var(--muted);min-width:22px}
+.tf .btns{display:flex;gap:8px;margin:8px 0 0 34px;flex-wrap:wrap}
+.tf button{font:600 13px var(--f-mono);background:var(--surface);color:var(--ink);border:1.5px solid var(--line);border-radius:4px;padding:6px 14px;cursor:pointer}
+.tf button:hover{border-color:var(--accent)}
+.tf button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.tf button.right{border-color:var(--ok);color:var(--ok)}
+.tf button.wrong{border-color:var(--bad);color:var(--bad)}
+.tf .exp{margin:10px 0 0 34px;font-size:.95rem}
+.tf .exp .v{font:600 12px var(--f-mono);letter-spacing:.06em;text-transform:uppercase}
+.score{font:600 14px var(--f-mono);color:var(--accent);margin-top:12px}
+.lit{font-size:.92rem;color:var(--muted);border-top:1px dashed var(--line);margin-top:28px;padding-top:12px}
+.lit b{color:var(--ink)}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
+.cols>div{min-width:0}
+.sheet{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px;margin-top:16px}
+.sheet .f{margin:0}
+.sheet .t{font:600 11px/1.3 var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+footer{margin-top:60px;font-size:.85rem;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+</style>
+</head>
+<body>
+
+<nav class="bar"><div class="in">
+<a href="#kurs">Курс</a><a href="#l1">Лекция 1</a><a href="#l2">Лекция 2</a><a href="#s1">Семинар 1</a><a href="#s3">Семинар 3</a><a href="#formuly">Формулы</a>
+</div></nav>
+
+<div class="wrap">
+
+<header class="hero" id="kurs">
+<div class="eyebrow">НИУ ВШЭ · ОП «Управление бизнесом» · 2026–2027</div>
+<h1>Теория финансов</h1>
+<p class="lead">Конспект лекций, разборы семинаров и сводка формул. Решения свёрнуты: сначала попробуй решить сам, потом открывай.</p>
+<div class="meta">
+<div><b>Преподаватель</b>И.Н. Царьков, к.э.н., доцент ВШБ НИУ ВШЭ</div>
+<div><b>Основной учебник</b>Росс С. и др. «Основы корпоративных финансов», 12-е изд., 2021</div>
+<div><b>Проект</b>Группы по 4–5 чел.: анализ публичной российской компании + кейс по реальным опционам, 3 презентации</div>
+</div>
+<div class="grade" aria-label="Структура оценки">
+<span style="width:40%;background:#1d6b57">Экзамен 40%</span><span style="width:30%;background:#2f8a73">Проект 30%</span><span style="width:20%;background:#9a6b12">Контрольные 20%</span><span style="width:10%;background:#56666e">10%</span>
+</div>
+<p style="font-size:.85rem;color:var(--muted);margin-top:6px">Экзамен блокирующий, письменный. Последние 10% — посещаемость.</p>
+
+<div class="toc">
+<div><span class="n">1</span><div>Основание современной теории финансов<div class="s">Сем. 1: инвестиционные расчёты</div></div></div>
+<div><span class="n">2</span><div>Риск и доходность<div class="s">Сем. 2: риск и доходность</div></div></div>
+<div><span class="n">3</span><div>Модели определения ставки дисконтирования<div class="s">Сем. 3: MPT, CML, CAPM</div></div></div>
+<div><span class="n">4</span><div>Теория структуры капитала<div class="s">Материалы ещё не загружены</div></div></div>
+<div><span class="n">5</span><div>Принятие инвестиционных и финансовых решений<div class="s">Материалы ещё не загружены</div></div></div>
+<div><span class="n">6</span><div>Финансовые и реальные опционы<div class="s">Сем. 6: оценка стоимости опциона</div></div></div>
+</div>
+
+<h3>Литература курса</h3>
+<div class="cols">
+<div><b>Основная</b><ol>
+<li>Росс С. Основы корпоративных финансов. 12-е изд. Олимп-Бизнес, 2021.</li>
+<li>Brealey, Myers, Allen. Principles of Corporate Finance. 13th ed., 2020.</li>
+<li>Шарп У., Александер Г., Бэйли Дж. Инвестиции, 2011.</li>
+<li>Халл Д.К. Опционы, фьючерсы и другие производные финансовые инструменты, 2019.</li></ol></div>
+<div><b>Дополнительная</b><ul>
+<li>Мандельброт Б., Хадсон Р. (Не)послушные рынки, 2006.</li>
+<li>Талеб Н. Антихрупкость, 2023.</li>
+<li>Малкиел Б. Случайное блуждание по Уолл-стрит, 2025.</li>
+<li>Шиллер Р. Иррациональный оптимизм, 3-е изд., 2023.</li></ul></div>
+</div>
+</header>
+
+<!-- ============ ЛЕКЦИЯ 1 ============ -->
+<section class="part" id="l1">
+<div class="head"><span class="eyebrow">Лекция 1</span><h2>Основание современной теории финансов</h2></div>
+
+<h3>Ключевые вопросы</h3>
+<div class="cols">
+<div><b>Корпоративные финансы</b><ol><li>Цели финансового управления</li><li>Инвестиционные и финансовые решения</li><li>Классификация инвестиционных решений</li><li>Финансовые показатели оценки подразделений</li></ol></div>
+<div><b>Макроэкономика</b><ul><li>Финансовые посредники</li><li>Влияние на ВВП страны</li><li>Влияние на благосостояние (ESG)</li></ul></div>
+</div>
+
+<h3>Основные модели теории финансов</h3>
+<div class="cols">
+<div><b>Фундаментальные</b><ol>
+<li>Современная портфельная теория (MPT) — Марковиц, 1950-е</li>
+<li>Теория структуры капитала — Модильяни и Миллер, 1958</li>
+<li>CAPM — Шарп, Линтнер, Моссин, 1960-е</li>
+<li>Модель оценки опционов — Блэк, Шоулз, Мертон, 1973</li>
+<li>Биномиальная модель — Кокс, Росс, Рубинштейн, 1979</li></ol></div>
+<div><b>Рыночные</b><ul>
+<li>Рыночная модель доходности актива (Шарп, 1964)</li>
+<li>Факторные модели CAPM</li>
+<li>APT Росса (арбитражное ценообразование, 1976)</li>
+<li>Модели Фамы–Френча (1992–2015)</li>
+<li>Высокочастотная торговля (HFT, 2000-е)</li>
+<li>Модели ML и AI (2010-е)</li></ul></div>
+</div>
+
+<h3>Хронология идей</h3>
+<div class="timeline">
+<div><span class="y">1900</span> · <b>Луи Башелье</b> (1870–1946). Показал, что цены облигаций следуют случайному блужданию, а изменения цен распределены нормально; рассчитал вероятность прибыли по 45-дневному опциону.</div>
+<div><span class="y">1950-е</span> · <b>Гарри Марковиц</b> (1927–2023), MPT. Значение имеют только доходность бумаг и их риск, выраженный СКО.</div>
+<div><span class="y">1960-е</span> · <b>Шарп, Линтнер, Моссин</b> — модель оценки капитальных активов (CAPM).</div>
+<div><span class="y">1985</span> · Нобелевская премия <b>Франко Модильяни</b> — за анализ финансовых рынков и поведения людей в отношении сбережений.</div>
+<div><span class="y">1990</span> · Нобелевская премия <b>Марковицу, Миллеру и Шарпу</b> — за теорию финансовой экономики.</div>
+<div><span class="y">1997</span> · Нобелевская премия <b>Мертону и Шоулзу</b> — за метод оценки производных инструментов. Соавтор Шоулза Фишер Блэк умер в 1995 г.</div>
+<div><span class="y">2013</span> · Нобелевская премия <b>Фаме, Хансену и Шиллеру</b> — за эмпирический анализ цен активов.</div>
+</div>
+
+<h3>Концепции финансового менеджмента</h3>
+<ol>
+<li>Денежных потоков</li><li>Временной стоимости денег</li><li>Альтернативной стоимости капитала</li><li>Премии за риск для не склонного к риску инвестора</li><li>Эффективности рынка капитала</li><li>Асимметричности информации</li><li>Фундаментальной стоимости активов</li>
+</ol>
+<div class="note"><b>Асват Дамодаран:</b> «Чем больше всё меняется, тем больше остаётся прежним… „Актуальна ли оценка стоимости на этом рынке?“ Я отвечаю однозначно: „Да, и даже в большей мере, чем прежде“».</div>
+
+<h3>Стоимость любых активов</h3>
+<div class="f"><math display="block"><mtext>Доходность</mtext><mo>=</mo><mfrac><mrow><mtext>Благосост.</mtext><msub><mrow/><mtext>конец</mtext></msub><mo>−</mo><mtext>Благосост.</mtext><msub><mrow/><mtext>начало</mtext></msub></mrow><mrow><mtext>Благосост.</mtext><msub><mrow/><mtext>начало</mtext></msub></mrow></mfrac></math></div>
+<div class="f"><math display="block"><mtext>Фундаментальная стоимость</mtext><mo>=</mo><mi>P</mi><mi>V</mi><mo>=</mo><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><mfrac><mrow><mi>C</mi><msub><mi>F</mi><mi>i</mi></msub></mrow><msup><mrow><mo>(</mo><mn>1</mn><mo>+</mo><mi>r</mi><mo>)</mo></mrow><mi>i</mi></msup></mfrac></math>
+<div class="cap">Стоимость актива — приведённая стоимость его будущих денежных потоков.</div></div>
+<p><b>Абсолютно эффективный рынок</b> — рынок, где цена каждой бумаги всегда равна её истинной стоимости. Виды стоимости: фундаментальная (истинная), справедливая, рыночная, балансовая, номинальная.</p>
+<div class="note"><b>Дискуссия:</b> как идеи Башелье, Марковица и Шарпа прямо сейчас определяют то, как совет директоров утверждает бюджет капитальных затрат (CAPEX)? Подсказка: ставка дисконтирования для NPV берётся из CAPM, а CAPM вырос из MPT.</div>
+
+<h3>Сложные и непрерывные проценты</h3>
+<div class="f"><math display="block"><mi>T</mi><msub><mi>V</mi><mi>n</mi></msub><mo>=</mo><mi>P</mi><mi>V</mi><mo>·</mo><msup><mrow><mo>(</mo><mn>1</mn><mo>+</mo><mfrac><mi>i</mi><mi>m</mi></mfrac><mo>)</mo></mrow><mrow><mi>m</mi><mi>n</mi></mrow></msup><mspace width="2em"/><msub><mi>i</mi><mi>e</mi></msub><mo>=</mo><msup><mrow><mo>(</mo><mn>1</mn><mo>+</mo><mfrac><mi>i</mi><mi>m</mi></mfrac><mo>)</mo></mrow><mi>m</mi></msup><mo>−</mo><mn>1</mn></math>
+<div class="cap">i — номинальная годовая ставка, m — число начислений в год, n — срок в годах, i<sub>e</sub> — эффективная ставка.</div></div>
+<div class="f"><math display="block"><mi>T</mi><msub><mi>V</mi><mi>t</mi></msub><mo>=</mo><mi>P</mi><mi>V</mi><mo>·</mo><msup><mi>e</mi><mrow><msub><mi>i</mi><mi>c</mi></msub><mi>t</mi></mrow></msup><mspace width="2em"/><msub><mi>i</mi><mi>e</mi></msub><mo>=</mo><msup><mi>e</mi><msub><mi>i</mi><mi>c</mi></msub></msup><mo>−</mo><mn>1</mn><mspace width="2em"/><msub><mi>i</mi><mi>c</mi></msub><mo>=</mo><mi>ln</mi><mo>(</mo><mn>1</mn><mo>+</mo><msub><mi>i</mi><mi>e</mi></msub><mo>)</mo></math>
+<div class="cap">Непрерывное начисление — предел при m → ∞.</div></div>
+<div class="tbl"><table>
+<tr><th>m, раз в год</th><th class="r">i = 12%: i<sub>e</sub></th><th class="r">i = 4%: i<sub>e</sub></th></tr>
+<tr><td>2</td><td class="r">12,36%</td><td class="r">4,04%</td></tr>
+<tr><td>4</td><td class="r">12,55%</td><td class="r">4,06%</td></tr>
+<tr><td>12</td><td class="r">12,68%</td><td class="r">4,07%</td></tr>
+<tr><td>360</td><td class="r">12,75%</td><td class="r">4,08%</td></tr>
+<tr><td>∞ (непрерывно)</td><td class="r">12,75%</td><td class="r">4,08%</td></tr>
+</table></div>
+
+<h3>Современная стоимость финансовой ренты</h3>
+<div class="f"><math display="block"><mi>A</mi><mo>=</mo><mi>R</mi><mo>·</mo><mfrac><mrow><mn>1</mn><mo>−</mo><msup><mrow><mo>(</mo><mn>1</mn><mo>+</mo><mi>r</mi><mo>)</mo></mrow><mrow><mo>−</mo><mi>n</mi></mrow></msup></mrow><mi>r</mi></mfrac><mo>=</mo><mi>R</mi><mo>·</mo><mi>B</mi><mo>(</mo><mi>n</mi><mo>;</mo><mi>r</mi><mo>)</mo><mo>=</mo><mfrac><mi>R</mi><mi>r</mi></mfrac><mo>−</mo><mfrac><mi>R</mi><mi>r</mi></mfrac><mo>·</mo><mfrac><mn>1</mn><msup><mrow><mo>(</mo><mn>1</mn><mo>+</mo><mi>r</mi><mo>)</mo></mrow><mi>n</mi></msup></mfrac></math>
+<div class="cap">Аннуитет постнумерандо: R — ежегодный платёж, r — ставка дисконтирования, n — срок, B(n; r) — коэффициент аннуитета.</div></div>
+<div class="cols">
+<div class="f"><math display="block"><mi>A</mi><mo>=</mo><mfrac><mi>R</mi><mi>r</mi></mfrac></math><div class="cap">Перпетуитет (бессрочная рента)</div></div>
+<div class="f"><math display="block"><mi>A</mi><mo>=</mo><mfrac><msub><mi>R</mi><mn>1</mn></msub><mrow><mi>r</mi><mo>−</mo><mi>g</mi></mrow></mfrac></math><div class="cap">Растущий перпетуитет, g — темп прироста R, g &lt; r. В числителе — платёж <b>следующего</b> года.</div></div>
+</div>
+<div class="note"><b>Аналогия.</b> Аннуитет на n лет = вечная рента, начинающаяся сегодня, минус вечная рента, начинающаяся через n лет. Отсюда и вторая запись формулы: R/r − (R/r)·(1+r)<sup>−n</sup>.</div>
+
+<h3>Процентные ставки</h3>
+<div class="cols">
+<div><b>Краткосрочные</b><ul><li>Ключевая ставка ЦБ</li><li>RUONIA (в США — EFFR)</li><li>RUSFAR (в США — SOFR)</li></ul></div>
+<div><b>Долгосрочные (по облигациям)</b><ul><li>Ставки по гособлигациям в нацвалюте (ОФЗ)</li><li>Номинальные ставки, доходности к погашению</li><li>Бескупонные ставки (G-кривая), форвардные ставки</li></ul></div>
+</div>
+<p>Открытый вопрос лекции: <b>что считать безрисковой ставкой?</b> Обычно — доходность ОФЗ со сроком, близким к сроку оцениваемых потоков, по кривой бескупонной доходности.</p>
+
+<h3>Временная структура процентных ставок</h3>
+<ol><li>Теория ожидаемой доходности — И. Фишер, начало XX в.</li><li>Теория предпочтения ликвидности — Дж. Кейнс, 1936</li><li>Теория сегментированных рынков — Дж. Калбертсон, 1957</li><li>Теория предпочитаемой среды — Ф. Модильяни, Р. Сатч, 1966</li></ol>
+<div class="f"><math display="block"><mo>(</mo><mn>1</mn><mo>+</mo><msub><mi>s</mi><mn>1</mn></msub><mo>)</mo><mo>(</mo><mn>1</mn><mo>+</mo><msub><mi>f</mi><mrow><mn>1</mn><mo>,</mo><mn>2</mn></mrow></msub><mo>)</mo><mo>=</mo><msup><mrow><mo>(</mo><mn>1</mn><mo>+</mo><msub><mi>s</mi><mn>2</mn></msub><mo>)</mo></mrow><mn>2</mn></msup></math>
+<div class="cap">s<sub>t</sub> — спот-ставка (доходность бескупонной облигации со сроком t); f<sub>t−1,t</sub> — однолетняя форвардная ставка, ожидаемая через t−1 лет. Инвестировать на 2 года сразу = на год сейчас + на год по форварду.</div></div>
+
+<div class="lit"><b>📚 Росс:</b> гл. 1 (введение в корпоративные финансы, цель управления), гл. 5–6 (временная стоимость денег, аннуитеты, перпетуитеты, эффективная ставка), гл. 7 (процентные ставки, временная структура). Нумерация дана по англ. изданию Fundamentals of Corporate Finance — в русском 12-м издании может отличаться.</div>
+</section>
+
+<!-- ============ ЛЕКЦИЯ 2 ============ -->
+<section class="part" id="l2">
+<div class="head"><span class="eyebrow">Лекция 2</span><h2>Риск и доходность</h2></div>
+
+<h3>Доходность и дисперсия по ценам акции</h3>
+<div class="f"><math display="block"><msub><mi>r</mi><mi>i</mi></msub><mo>=</mo><mfrac><mrow><msub><mi>P</mi><mi>i</mi></msub><mo>+</mo><msub><mi>D</mi><mi>i</mi></msub></mrow><msub><mi>P</mi><mrow><mi>i</mi><mo>−</mo><mn>1</mn></mrow></msub></mfrac><mo>−</mo><mn>1</mn><mspace width="1.5em"/><mover><mi>r</mi><mo>¯</mo></mover><mo>=</mo><mfrac><mrow><msub><mi>r</mi><mn>1</mn></msub><mo>+</mo><mo>…</mo><mo>+</mo><msub><mi>r</mi><mi>N</mi></msub></mrow><mi>N</mi></mfrac><mspace width="1.5em"/><msup><mi>s</mi><mn>2</mn></msup><mo>=</mo><mfrac><mrow><mo>∑</mo><msup><mrow><mo>(</mo><msub><mi>r</mi><mi>i</mi></msub><mo>−</mo><mover><mi>r</mi><mo>¯</mo></mover><mo>)</mo></mrow><mn>2</mn></msup></mrow><mrow><mi>N</mi><mo>−</mo><mn>1</mn></mrow></mfrac></math>
+<div class="cap">P<sub>i</sub> — дневные курсы, D<sub>i</sub> — дивиденды. Деление на N−1 даёт несмещённую оценку дисперсии.</div></div>
+
+<h3>CAGR или ожидаемая доходность?</h3>
+<p>Фонд за 5 лет: +20%, −2%, +20%, −5%, +17%. Среднее арифметическое <b>E[r] = 10%</b>, среднее геометрическое <b>CAGR = 9,4%</b>.</p>
+<div class="f"><math display="block"><mi>C</mi><mi>A</mi><mi>G</mi><mi>R</mi><mo>=</mo><msup><mrow><mo>(</mo><mn>1,2</mn><mo>·</mo><mn>0,98</mn><mo>·</mo><mn>1,2</mn><mo>·</mo><mn>0,95</mn><mo>·</mo><mn>1,17</mn><mo>)</mo></mrow><mrow><mn>1</mn><mo>/</mo><mn>5</mn></mrow></msup><mo>−</mo><mn>1</mn><mo>=</mo><msup><mn>1,5685</mn><mrow><mn>0,2</mn></mrow></msup><mo>−</mo><mn>1</mn><mo>≈</mo><mn>9,4</mn><mi>%</mi></math></div>
+<p>Пример: актив с вероятностью 50% растёт на 100% или падает на 50%. Среднее арифметическое за период = 25%, а CAGR при одном росте и одном падении = 0% (100 → 200 → 100). Ожидаемый денежный поток через 1 год — 125, через 2 года — 156,25: ожидаемая доходность остаётся 25% в год.</p>
+<div class="note"><b>Вывод для ставки дисконтирования:</b> для дисконтирования ожидаемых денежных потоков нужна ожидаемая (арифметическая) доходность. CAGR описывает прошлый рост одной конкретной траектории и всегда не больше среднего арифметического.</div>
+
+<h3>Годовая доходность и риск через непрерывные ставки</h3>
+<div class="f"><math display="block"><msub><mi>r</mi><mrow><mi>c</mi><mi>i</mi></mrow></msub><mo>=</mo><mi>ln</mi><mfrac><mrow><msub><mi>P</mi><mi>i</mi></msub><mo>+</mo><msub><mi>D</mi><mi>i</mi></msub></mrow><msub><mi>P</mi><mrow><mi>i</mi><mo>−</mo><mn>1</mn></mrow></msub></mfrac><mspace width="1.5em"/><mi>μ</mi><mo>=</mo><mfrac><mrow><mo>∑</mo><msub><mi>r</mi><mrow><mi>c</mi><mi>i</mi></mrow></msub></mrow><mi>N</mi></mfrac><mo>≈</mo><mfrac><mn>1</mn><mi>N</mi></mfrac><mi>ln</mi><mfrac><msub><mi>P</mi><mi>N</mi></msub><msub><mi>P</mi><mn>0</mn></msub></mfrac><mspace width="1.5em"/><msup><mi>σ</mi><mn>2</mn></msup><mo>=</mo><mfrac><mrow><mo>∑</mo><msup><mrow><mo>(</mo><msub><mi>r</mi><mrow><mi>c</mi><mi>i</mi></mrow></msub><mo>−</mo><mi>μ</mi><mo>)</mo></mrow><mn>2</mn></msup></mrow><mrow><mi>N</mi><mo>−</mo><mn>1</mn></mrow></mfrac></math>
+<div class="cap">Шаг 3 — перевод в годовые: μ<sub>год</sub> ≈ 252·μ, σ<sub>год</sub> ≈ σ·√252 (252 торговых дня). Непрерывные доходности складываются, поэтому сумма дневных = логарифм общего роста. Регрессия ln P<sub>t</sub> = α + β·t даёт ещё более точную оценку, чем CAGR.</div></div>
+
+<h3>Что показывают фондовые индексы</h3>
+<div class="tbl"><table>
+<tr><th>Индекс</th><th>Факт с лекции</th></tr>
+<tr><td>DJIA</td><td>Ожидаемая 5,18%, эмпирическая 6,42%, геометрическая 3,67%; R² регрессии = 94%</td></tr>
+<tr><td>S&amp;P 500, вся история</td><td>E[r] = 6,6%, CAGR = 4,7%</td></tr>
+<tr><td>S&amp;P 500, 50 лет</td><td>E[r] = 9,1%; медиана 10,6%, СКО 16,3%; рост 93 → 4700 (≈50 раз, инфляция ≈7 раз)</td></tr>
+<tr><td>S&amp;P 500, хвосты</td><td>По норм. закону P(день &lt; −10%) = 2,8·10<sup>−17</sup> — раз в 144 трлн лет. Факт: 7 таких дней</td></tr>
+<tr><td>IMOEX</td><td>Медиана 12,7%, СКО 35,6%; 2003–2020: 310 → 3200 (≈10 раз, инфляция ≈4 раза); кризисы 2008, 2014, 2020</td></tr>
+</table></div>
+<p>Реальные распределения доходностей акций имеют <b>толстые хвосты</b> (эксцесс) и <b>асимметрию</b>; дисперсия может даже не существовать. Распределение доходности портфеля гораздо ближе к нормальному или логнормальному, чем распределения отдельных бумаг.</p>
+
+<h3>Что такое риск</h3>
+<ul>
+<li><b>В финансах:</b> возможность того, что фактическое значение окажется больше или меньше ожидаемого. Разброс измеряется дисперсией или СКО.</li>
+<li><b>В оценке проектов:</b> события с нежелательными последствиями для проекта.</li>
+<li><b>Upside risk</b> — благоприятные отклонения; <b>downside risk</b> — неблагоприятные.</li>
+</ul>
+<p>Соотношение «риск — доходность»: облигации → акции → производные. Чем выше дисперсия, тем выше ожидаемая доходность, и наоборот.</p>
+
+<h3>Отношение к риску и безрисковый эквивалент</h3>
+<p>Три типа инвесторов: не склонный к риску (кривые безразличия растут — за риск нужна премия), нейтральный (кривые горизонтальны), склонный (кривые падают). <b>Большинство инвесторов не склонны к риску.</b></p>
+<p><b>«Орлянка»:</b> участие стоит 100 р., орёл — 200 р., решка — 0. E[CF] = 100, ожидаемая доходность 0%. Не склонный к риску инвестор играть не будет.</p>
+<p><b>Безрисковый эквивалент (CE)</b> — минимальный безрисковый доход, на который инвестор готов обменять ожидаемый рисковый доход.</p>
+<div class="f"><math display="block"><mi>P</mi><mi>V</mi><mo>=</mo><mfrac><mrow><mi>E</mi><mo>[</mo><mi>F</mi><mi>V</mi><mo>]</mo></mrow><mrow><mn>1</mn><mo>+</mo><msub><mi>r</mi><mi>e</mi></msub></mrow></mfrac><mo>=</mo><mfrac><mrow><mi>C</mi><mi>E</mi><mo>[</mo><mi>F</mi><mi>V</mi><mo>]</mo></mrow><mrow><mn>1</mn><mo>+</mo><msub><mi>r</mi><mi>f</mi></msub></mrow></mfrac><mspace width="2em"/><mi>C</mi><mi>E</mi><mo>[</mo><mi>F</mi><mi>V</mi><mo>]</mo><mo>=</mo><mi>E</mi><mo>[</mo><mi>F</mi><mi>V</mi><mo>]</mo><mo>−</mo><mi>P</mi><mi>V</mi><mo>·</mo><mo>(</mo><msub><mi>r</mi><mi>e</mi></msub><mo>−</mo><msub><mi>r</mi><mi>f</mi></msub><mo>)</mo></math>
+<div class="cap">Пример: r<sub>f</sub> = 10%, r<sub>e</sub> = 15%, E[FV] = 115 т.р. Тогда PV = 115/1,15 = 100, CE = 115 − 100·0,05 = 110 т.р. (и 110/1,1 = 100). Премия за риск — 5% или 5 т.р.</div></div>
+<p>Игра «орёл — 220 р., решка — 10 р.» при цене 100 р.: E[CF] = 115, E[r] = 15%, ожидаемый выигрыш 15 р. Если для инвестора CE = 105 р., то скидка за риск = 10 р., эквивалентная безрисковая доходность 5%, премия за риск 10%.</p>
+<div class="note"><b>Вопрос с лекции.</b> Выручка ∈ [400; 500], затраты ∈ [200; 300] (вариант 1) или ровно 250 (вариант 2); ожидаемая прибыль 200 в обоих. Чему равен CE затрат в первом случае и какова премия за риск для затрат? <i>Подумай:</i> риск затрат увеличивает разброс прибыли, поэтому не склонный к риску инвестор оценит неопределённые затраты <b>дороже</b> 250 — их CE выше ожидаемого значения, а премия за риск для затрат имеет знак, обратный премии для доходов.</div>
+
+<h3>Виды риска и диверсификация</h3>
+<p>Риски: глобальные, страновые, отраслевые → <b>рыночные</b>; конкурентные, проектные (фирма) → <b>специфические</b>.</p>
+<p>С ростом числа акций N специфический (идиосинкратический) риск портфеля стремится к нулю, остаётся рыночный (ковариационный). Отсюда: хорошо диверсифицированный инвестор учитывает только рыночный риск акции, измеряемый относительно рыночного портфеля, а пассивная стратегия — инвестировать в рыночный портфель.</p>
+
+<h3>Финансовый рычаг: рисковый актив + безрисковый</h3>
+<div class="f"><math display="block"><mi>E</mi><mo>[</mo><msub><mi>r</mi><mi>p</mi></msub><mo>]</mo><mo>=</mo><mi>x</mi><mo>·</mo><mi>E</mi><mo>[</mo><msub><mi>r</mi><mi>a</mi></msub><mo>]</mo><mo>+</mo><mo>(</mo><mn>1</mn><mo>−</mo><mi>x</mi><mo>)</mo><mo>·</mo><msub><mi>r</mi><mi>f</mi></msub><mspace width="2em"/><msub><mi>σ</mi><mi>p</mi></msub><mo>=</mo><mi>x</mi><mo>·</mo><msub><mi>σ</mi><mi>a</mi></msub></math>
+<div class="cap">x — доля рискового актива. При x &gt; 1 инвестор продаёт безрисковый актив, то есть берёт кредит по безрисковой ставке.</div></div>
+
+<h3>Портфель из двух акций</h3>
+<div class="f"><math display="block"><msub><mi>r</mi><mi>p</mi></msub><mo>=</mo><mi>x</mi><msub><mi>r</mi><mi>A</mi></msub><mo>+</mo><mo>(</mo><mn>1</mn><mo>−</mo><mi>x</mi><mo>)</mo><msub><mi>r</mi><mi>B</mi></msub><mspace width="2em"/><msub><mi>σ</mi><mi>p</mi></msub><mo>=</mo><msqrt><msup><mi>x</mi><mn>2</mn></msup><msubsup><mi>σ</mi><mi>A</mi><mn>2</mn></msubsup><mo>+</mo><msup><mrow><mo>(</mo><mn>1</mn><mo>−</mo><mi>x</mi><mo>)</mo></mrow><mn>2</mn></msup><msubsup><mi>σ</mi><mi>B</mi><mn>2</mn></msubsup><mo>+</mo><mn>2</mn><mi>x</mi><mo>(</mo><mn>1</mn><mo>−</mo><mi>x</mi><mo>)</mo><msub><mi>ρ</mi><mrow><mi>A</mi><mi>B</mi></mrow></msub><msub><mi>σ</mi><mi>A</mi></msub><msub><mi>σ</mi><mi>B</mi></msub></msqrt></math>
+<div class="cap">cov(r<sub>A</sub>; r<sub>B</sub>) = ρ<sub>AB</sub>σ<sub>A</sub>σ<sub>B</sub>. Если ρ = ∓1, то σ<sub>p</sub> = |x·σ<sub>A</sub> ± (1−x)·σ<sub>B</sub>|. Чем меньше корреляция, тем сильнее эффект диверсификации.</div></div>
+
+<h3>Портфель из N акций</h3>
+<div class="f"><math display="block"><msubsup><mi>σ</mi><mi>p</mi><mn>2</mn></msubsup><mo>=</mo><munderover><mo>∑</mo><mrow><mi>i</mi><mo>,</mo><mi>j</mi><mo>=</mo><mn>1</mn></mrow><mi>N</mi></munderover><msub><mi>x</mi><mi>i</mi></msub><msub><mi>x</mi><mi>j</mi></msub><msub><mi>ρ</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><msub><mi>σ</mi><mi>i</mi></msub><msub><mi>σ</mi><mi>j</mi></msub><mspace width="2em"/><mtext>равные веса: </mtext><msubsup><mi>σ</mi><mi>p</mi><mn>2</mn></msubsup><mo>=</mo><mfrac><mover><mtext>var</mtext><mo>¯</mo></mover><mi>N</mi></mfrac><mo>+</mo><mfrac><mrow><mi>N</mi><mo>−</mo><mn>1</mn></mrow><mi>N</mi></mfrac><mo>·</mo><mover><mtext>cov</mtext><mo>¯</mo></mover><mo>→</mo><mover><mtext>cov</mtext><mo>¯</mo></mover></math>
+<div class="cap">В матрице ковариаций N дисперсий и N² − N ковариаций. При большом N остаётся только средняя ковариация: вклад бумаги в риск портфеля определяется её ковариацией с остальными.</div></div>
+
+<h3>Достижимое и эффективное множества</h3>
+<p>Все комбинации активов образуют «зонтик» Марковица. Его верхняя граница от портфеля с минимальным риском (1) до портфеля с максимальной доходностью (2) — <b>эффективное множество</b>. Оптимальный портфель конкретного инвестора — точка касания его кривой безразличия и границы; он зависит от индивидуальных предпочтений.</p>
+
+<h3>Линия рынка капитала (CML)</h3>
+<div class="f"><math display="block"><mi>r</mi><mo>=</mo><msub><mi>r</mi><mi>f</mi></msub><mo>+</mo><mi>σ</mi><mo>·</mo><mfrac><mrow><msub><mi>r</mi><mi>m</mi></msub><mo>−</mo><msub><mi>r</mi><mi>f</mi></msub></mrow><msub><mi>σ</mi><mi>m</mi></msub></mfrac></math>
+<div class="cap">(r<sub>m</sub> − r<sub>f</sub>)/σ<sub>m</sub> — коэффициент Шарпа рыночного портфеля M. Прямая из r<sub>f</sub> касается «зонтика» в точке M; все инвесторы держат комбинацию M и безрискового актива — различаются только доли.</div></div>
+
+<h3>MPT и проблема ошибок оценки</h3>
+<p>Оптимизация: w<sup>T</sup>Cw → min при w<sup>T</sup>r = r<sub>0</sub> и w<sup>T</sup>1 = 1. Матрица ковариаций C = R<sup>T</sup>R/(N−1) имеет ранг ≤ min(T; N), поэтому оптимизатору Марковица нужно T ≫ N наблюдений. Иначе применяют сжатие (регуляризацию) матрицы — Ledoit–Wolf shrinkage, 2003/2004.</p>
+
+<h3>Постсовременная портфельная теория (PMPT, 1993)</h3>
+<p>Авторы — Брайан Ром и Кэтлин Фергюсон. Риском считается только отклонение вниз от минимально приемлемой доходности MAR.</p>
+<div class="f"><math display="block"><mi>D</mi><mi>D</mi><mo>(</mo><mi>M</mi><mi>A</mi><mi>R</mi><mo>)</mo><mo>=</mo><msqrt><mrow><mfrac><mn>1</mn><mrow><mi>T</mi><mo>−</mo><mn>1</mn></mrow></mfrac><munder><mo>∑</mo><mi>t</mi></munder><msup><mrow><mi>min</mi><mo>(</mo><msub><mi>r</mi><mi>t</mi></msub><mo>−</mo><mi>M</mi><mi>A</mi><mi>R</mi><mo>;</mo><mn>0</mn><mo>)</mo></mrow><mn>2</mn></msup></mrow></msqrt><mspace width="2em"/><mtext>Sortino</mtext><mo>=</mo><mfrac><mrow><mi>E</mi><mo>[</mo><mi>r</mi><mo>]</mo><mo>−</mo><mi>M</mi><mi>A</mi><mi>R</mi></mrow><mrow><mi>D</mi><mi>D</mi><mo>(</mo><mi>M</mi><mi>A</mi><mi>R</mi><mo>)</mo></mrow></mfrac></math>
+<div class="cap">В основе — нижние частичные моменты LPM<sub>n</sub>(τ; r) = (1/T)·Σ max(0; τ − r<sub>t</sub>)<sup>n</sup>: 0-й — вероятность недостичь цели, 1-й — ожидаемый недобор, 2-й — полудисперсия.</div></div>
+
+<h3>Рыночная модель</h3>
+<div class="f"><math display="block"><msub><mi>r</mi><mi>i</mi></msub><mo>=</mo><msub><mi>α</mi><mi>i</mi></msub><mo>+</mo><msub><mi>β</mi><mi>i</mi></msub><msub><mi>r</mi><mi>m</mi></msub><mo>+</mo><msub><mi>ε</mi><mi>i</mi></msub><mspace width="1.5em"/><msub><mi>β</mi><mi>i</mi></msub><mo>=</mo><mfrac><mrow><mtext>cov</mtext><mo>(</mo><msub><mi>r</mi><mi>i</mi></msub><mo>;</mo><msub><mi>r</mi><mi>m</mi></msub><mo>)</mo></mrow><msubsup><mi>σ</mi><mi>m</mi><mn>2</mn></msubsup></mfrac><mo>=</mo><msub><mi>ρ</mi><mrow><mi>i</mi><mi>m</mi></mrow></msub><mfrac><msub><mi>σ</mi><mi>i</mi></msub><msub><mi>σ</mi><mi>m</mi></msub></mfrac><mspace width="1.5em"/><msubsup><mi>σ</mi><mi>i</mi><mn>2</mn></msubsup><mo>=</mo><munder><munder><mrow><msubsup><mi>β</mi><mi>i</mi><mn>2</mn></msubsup><msubsup><mi>σ</mi><mi>m</mi><mn>2</mn></msubsup></mrow><mo>⏟</mo></munder><mtext>рыночный</mtext></munder><mo>+</mo><munder><munder><msubsup><mi>σ</mi><mi>ε</mi><mn>2</mn></msubsup><mo>⏟</mo></munder><mtext>специфический</mtext></munder></math>
+<div class="cap">ε<sub>i</sub> — независимые случайные ошибки с нулевым матожиданием. Пример X5 по дневным данным: β = 0,75, E[r] = 18,9%, СКО = 36,0%.</div></div>
+
+<h3>Модель оценки капитальных активов (CAPM)</h3>
+<div class="cols">
+<div><b>Допущения</b><ul style="font-size:.95rem"><li>Эффективный рынок, нет арбитража</li><li>Безрисковая ставка для займа и размещения</li><li>Существует рыночный портфель</li><li>Рациональные инвесторы с одинаковыми ожиданиями</li><li>Нет транзакционных издержек</li><li>Финансовые активы делимы</li></ul></div>
+<div><b>Модель</b><p>Ожидаемая премия за риск любой инвестиции прямо пропорциональна её бете.</p></div>
+</div>
+<div class="f"><math display="block"><mi>E</mi><mo>[</mo><msub><mi>r</mi><mi>i</mi></msub><mo>]</mo><mo>−</mo><msub><mi>r</mi><mi>f</mi></msub><mo>=</mo><msub><mi>β</mi><mi>i</mi></msub><mo>(</mo><mi>E</mi><mo>[</mo><msub><mi>r</mi><mi>m</mi></msub><mo>]</mo><mo>−</mo><msub><mi>r</mi><mi>f</mi></msub><mo>)</mo><mspace width="2em"/><mi>M</mi><mi>R</mi><mi>P</mi><mo>=</mo><mi>E</mi><mo>[</mo><msub><mi>r</mi><mi>m</mi></msub><mo>]</mo><mo>−</mo><msub><mi>r</mi><mi>f</mi></msub></math>
+<div class="cap">MRP — рыночная премия за риск. Графически это рыночная линия ценной бумаги (SML): ось X — β, ось Y — E[r]. При β = 0 доходность равна r<sub>f</sub>; при β = 1 — рыночной; при β &lt; 0 ожидаемая доходность ниже безрисковой.</div></div>
+<div class="note"><b>CML и SML не путать.</b> CML: ось X — σ, на ней лежат только эффективные портфели. SML: ось X — β, на ней лежат все справедливо оценённые активы. Актив выше SML недооценён, ниже — переоценён.</div>
+<p><b>Идея доказательства.</b> Рыночный портфель оптимален. Линия комбинаций любой акции с рыночным портфелем должна касаться CML в точке M (иначе M не был бы оптимальным). Условие касания и даёт формулу CAPM.</p>
+
+<h3>Арбитраж</h3>
+<ul><li><b>I типа:</b> одинаковые бумаги продаются по разным ценам.</li><li><b>II типа:</b> портфель стоит больше или меньше суммы стоимостей входящих в него бумаг.</li></ul>
+<p><b>Теорема доминирования:</b> на рынке без арбитража актив с положительными денежными потоками имеет положительную цену, а актив без дохода — нулевую. <b>Теорема аддитивности:</b> стоимость портфеля равна сумме стоимостей входящих в него бумаг.</p>
+
+<div class="lit"><b>📚 Росс:</b> гл. 12 (уроки истории рынков капитала: доходности, арифметическое и геометрическое среднее, эффективность рынка), гл. 13 (доходность, риск, диверсификация, бета, SML и CAPM). Глубже по MPT — Шарп «Инвестиции»; Брейли–Майерс, гл. 7–8.</div>
+</section>
+
+<!-- ============ СЕМИНАР 1 ============ -->
+<section class="part" id="s1">
+<div class="head"><span class="eyebrow">Семинар 1 · с ответами</span><h2>Инвестиционные расчёты</h2></div>
+
+<h3>Формулы семинара</h3>
+<div class="f"><math display="block"><mi>T</mi><msub><mi>V</mi><mi>t</mi></msub><mo>=</mo><mi>P</mi><mi>V</mi><mo>·</mo><msup><mi>e</mi><mrow><msub><mi>r</mi><mi>c</mi></msub><mi>t</mi></mrow></msup><mspace width="1.5em"/><mi>D</mi><msub><mi>F</mi><mi>t</mi></msub><mo>=</mo><msup><mi>e</mi><mrow><mo>−</mo><msub><mi>r</mi><mi>c</mi></msub><mi>t</mi></mrow></msup><mspace width="1.5em"/><msup><mrow><mo>(</mo><mn>1</mn><mo>+</mo><mfrac><msub><mi>r</mi><mi>m</mi></msub><mi>m</mi></mfrac><mo>)</mo></mrow><mi>m</mi></msup><mo>=</mo><mn>1</mn><mo>+</mo><mi>r</mi><mo>=</mo><msup><mi>e</mi><msub><mi>r</mi><mi>c</mi></msub></msup></math>
+<div class="cap">Уравнение эквивалентности ставок. r = e<sup>r<sub>c</sub></sup> − 1 — эффективная ставка, r<sub>c</sub> = ln(1 + r). r<sub>c</sub> — годовая сумма процентов при непрерывном начислении без реинвестирования.</div></div>
+<div class="f"><math display="block"><mi>A</mi><mo>=</mo><mfrac><mi>R</mi><msub><mi>r</mi><mi>c</mi></msub></mfrac><mo>(</mo><mn>1</mn><mo>−</mo><msup><mi>e</mi><mrow><mo>−</mo><msub><mi>r</mi><mi>c</mi></msub><mi>t</mi></mrow></msup><mo>)</mo></math>
+<div class="cap">Аннуитет из непрерывных платежей суммой R в год за время t.</div></div>
+<div class="f"><math display="block"><msub><mi>r</mi><mn>0</mn></msub><mo>=</mo><mfrac><mrow><mi>r</mi><mo>−</mo><mi>α</mi></mrow><mrow><mn>1</mn><mo>+</mo><mi>α</mi></mrow></mfrac><mspace width="1em"/><mtext>(дискретные)</mtext><mspace width="2em"/><msub><mi>r</mi><mn>0</mn></msub><mo>=</mo><mi>r</mi><mo>−</mo><mi>α</mi><mspace width="1em"/><mtext>(непрерывные)</mtext></math>
+<div class="cap">Формула Фишера: α — инфляция, r — номинальная, r<sub>0</sub> — реальная доходность.</div></div>
+
+<div class="task"><h3>Задача 1 · проценты при непрерывном начислении</h3>
+<p>Рассчитайте величину накопленных за год процентных платежей без учёта временной стоимости денег при инвестировании 100 тыс. руб., на которые начисляются непрерывные проценты по ставке 20% годовых, но не реинвестируются.</p>
+<span class="ans">Ответ: 20 тыс. руб.</span>
+<details><summary>Решение</summary><div class="sol">
+<p>Если проценты не реинвестируются, база всегда 100 тыс. За бесконечно малый промежуток dt начисляется 100·0,2·dt. За год: ∫<sub>0</sub><sup>1</sup> 100·0,2 dt = <b>20 тыс. руб.</b></p>
+<p class="econ">Смысл: r<sub>c</sub> — это ставка «процентов без капитализации». С реинвестированием было бы 100·(e<sup>0,2</sup> − 1) = 22,14 тыс.</p></div></details></div>
+
+<div class="task"><h3>Задача 2 · аннуитет с непрерывными платежами</h3>
+<p>Чему равна современная стоимость непрерывного потока платежей 300 тыс. руб. в год, если платежи начинаются немедленно и продолжаются 15 лет при 10% годовых с ежегодным начислением?</p>
+<span class="ans">Ответ: 2 394,1 тыс. руб.</span>
+<details><summary>Решение</summary><div class="sol">
+<div class="step">1. Переводим ставку в непрерывную</div><p>r<sub>c</sub> = ln(1,1) = 0,09531.</p>
+<div class="step">2. Формула непрерывного аннуитета</div><p>A = 300/0,09531 · (1 − e<sup>−0,09531·15</sup>) = 3147,6 · (1 − 1,1<sup>−15</sup>) = 3147,6 · (1 − 0,23939) = <b>2394,1</b>.</p>
+<p class="econ">Типичная ошибка — подставить 0,10 вместо ln 1,1: ставка в формуле обязана быть непрерывной.</p></div></details></div>
+
+<div class="task"><h3>Задача 3 · пенсионные накопления</h3>
+<p>Через 30 лет работник начнёт получать пенсию 420 тыс. руб. в год (35 тыс. в мес.) в течение 20 лет. Доходность инвестирования 10%. Найдите стоимость пенсии сегодня для годовых (в конце года) и для непрерывных выплат.</p>
+<span class="ans">Ответ: 205 тыс. руб. (215 тыс. — непрерывные)</span>
+<details><summary>Решение</summary><div class="sol">
+<div class="step">Годовые выплаты</div><p>Стоимость на момент 30: 420·(1 − 1,1<sup>−20</sup>)/0,1 = 420·8,5136 = 3575,7. Дисконтируем на 30 лет: 3575,7/1,1<sup>30</sup> = 3575,7/17,449 = <b>204,9 ≈ 205</b>.</p>
+<div class="step">Непрерывные выплаты</div><p>420/ln1,1 · (1 − 1,1<sup>−20</sup>) = 4406,7·0,85136 = 3751,6; 3751,6/17,449 = <b>215,0</b>.</p>
+<p class="econ">Смысл: при непрерывном потоке деньги в среднем приходят на полгода раньше, поэтому он дороже. Пенсия на 8,4 млн номинально стоит сегодня всего 205 тыс. — так работает дисконтирование на длинных сроках.</p></div></details></div>
+
+<div class="task"><h3>Задача 4 · аннуитетный платёж после кредитных каникул</h3>
+<p>На начало 2024 г. долг 675 тыс. руб., срок 8 лет, ежегодные аннуитетные платежи, 8% (капитализация раз в год). В 2024 и 2025 гг. кредитные каникулы — платежи и проценты приостановлены. Найдите новый платёж с 2026 г. при неизменной дате последнего платежа (банк получает эквивалент первоначальных доходов).</p>
+<span class="ans">Ответ: 170,31 тыс. руб.</span>
+<details><summary>Решение</summary><div class="sol">
+<div class="step">1. Долг растёт два года</div><p>675·1,08<sup>2</sup> = 787,32 тыс. на начало 2026 г.</p>
+<div class="step">2. Сколько платежей осталось</div><p>Изначально платежи 2024–2031 (8 шт.); теперь 2026–2031 — 6 платежей.</p>
+<div class="step">3. Новый платёж</div><p>R = 787,32·0,08/(1 − 1,08<sup>−6</sup>) = 62,986/0,36983 = <b>170,31</b>.</p>
+<p class="econ">Проверка: исходный платёж 675·0,08/(1 − 1,08<sup>−8</sup>) = 117,46. Каникулы не бесплатны: платёж вырос на 45%.</p></div></details></div>
+
+<div class="task"><h3>Задача 5 · накопления с пропусками</h3>
+<p>Ежегодно в конце года добавляется 85 тыс. руб. под 10% начиная с 2024 г. Какая сумма будет на счёте в конце 2038 г. (включая платёж этого года), если в 2026 и 2027 гг. платежи пропущены?</p>
+<span class="ans">Ответ: 2 191,4 тыс. руб.</span>
+<details><summary>Решение</summary><div class="sol">
+<div class="step">1. Как будто без пропусков</div><p>2024–2038 — 15 платежей: 85·(1,1<sup>15</sup> − 1)/0,1 = 85·31,772 = 2700,7.</p>
+<div class="step">2. Вычитаем пропущенные с их наращением</div><p>Платёж 2026 г. рос бы 12 лет, 2027 г. — 11 лет: 85·(1,1<sup>12</sup> + 1,1<sup>11</sup>) = 85·(3,1384 + 2,8531) = 509,3.</p>
+<div class="step">3. Итог</div><p>2700,7 − 509,3 = <b>2191,4</b>.</p>
+<p class="econ">Приём «полный аннуитет минус дыры» быстрее, чем считать три отдельных куска.</p></div></details></div>
+
+<div class="task"><h3>Задача 6 · квартира под аренду</h3>
+<p>Аренда аналогичной квартиры сейчас 700 тыс. руб. в год (в конце года), растёт на 6,8% в год. Требуемая доходность 17%. Первый доход — через 3 года. Найдите максимальную цену квартиры сегодня (с точностью до 0,1 тыс.).</p>
+<span class="ans">Ответ: 6 107,2 тыс. руб. (6 394,4 — непрерывные)</span>
+<details><summary>Решение</summary><div class="sol">
+<div class="step">1. Первый платёж через 3 года</div><p>CF<sub>3</sub> = 700·1,068<sup>3</sup> = 852,73.</p>
+<div class="step">2. Растущий перпетуитет на момент 2</div><p>V<sub>2</sub> = 852,73/(0,17 − 0,068) = 8360,1.</p>
+<div class="step">3. Дисконтируем на 2 года</div><p>8360,1/1,17<sup>2</sup> = <b>6107,2</b>.</p>
+<div class="step">Непрерывный вариант</div><p>r<sub>c</sub> = ln1,17 = 0,15700; g<sub>c</sub> = ln1,068 = 0,06579. Поток с t = 2: 700·e<sup>−(r<sub>c</sub>−g<sub>c</sub>)·2</sup>/(r<sub>c</sub> − g<sub>c</sub>) = 700·0,83325/0,09122 = <b>6394,4</b>.</p>
+<p class="econ">Главная ловушка: формула R/(r−g) даёт стоимость на год <b>раньше</b> первого платежа, поэтому дисконтируем на 2 года, а не на 3.</p></div></details></div>
+
+<div class="task"><h3>Задача 7 · растущий перпетуитет</h3>
+<p>В текущем году бизнес принесёт 7,5 млн руб. чистого дохода, долгосрочный рост 6%. Какую максимальную доходность должен обеспечивать бизнес, чтобы его было выгодно купить за 80 млн руб.?</p>
+<span class="ans">Ответ: 15,4%</span>
+<details><summary>Решение</summary><div class="sol">
+<p>80 = 7,5/(r − 0,06) ⇒ r = 0,06 + 7,5/80 = 0,06 + 0,09375 = <b>15,375% ≈ 15,4%</b>.</p>
+<p class="econ">Это ставка, при которой цена 80 млн справедлива (IRR сделки). Если ваша требуемая доходность ниже 15,4%, бизнес стоит для вас больше 80 млн — покупать выгодно.</p></div></details></div>
+</section>
+
+<!-- ============ СЕМИНАР 3 ============ -->
+<section class="part" id="s3">
+<div class="head"><span class="eyebrow">Семинар 3</span><h2>Современная теория портфеля (MPT)</h2></div>
+<p>Основные понятия: «зонтик» Марковица, допустимое и эффективное множества, рыночный и специфический риск, коэффициент Шарпа, рыночная модель, бета-коэффициент. Формулы — портфель из двух активов и CML из <a href="#l2">лекции 2</a>.</p>
+
+<h3>Верно или неверно?</h3>
+<p style="color:var(--muted);font-size:.95rem">Выбери ответ — откроется объяснение.</p>
+<div class="tf" id="tf"></div>
+<div class="score" id="tfscore" aria-live="polite"></div>
+
+<div class="task"><h3>Задача 1 · неэффективные портфели</h3>
+<p>По доходностям и СКО определите заведомо неэффективные портфели.</p>
+<div class="tbl"><table><tr><th>Портфель</th><th class="r">E[r]</th><th class="r">СКО</th></tr>
+<tr><td>A</td><td class="r">10%</td><td class="r">23%</td></tr><tr><td>B</td><td class="r">12%</td><td class="r">24%</td></tr><tr><td>C</td><td class="r">15%</td><td class="r">25%</td></tr><tr><td>D</td><td class="r">17%</td><td class="r">28%</td></tr><tr><td>E</td><td class="r">16%</td><td class="r">29%</td></tr></table></div>
+<details><summary>Решение</summary><div class="sol">
+<div class="step">1. Прямое доминирование</div><p>Портфель неэффективен, если есть другой с не меньшей доходностью и не большим риском. <b>E</b> доминируется <b>D</b>: 17% &gt; 16% при 28% &lt; 29%.</p>
+<div class="step">2. Доминирование комбинацией</div><p>Смешаем A и C пополам: E[r] = 12,5%, σ ≤ 0,5·23 + 0,5·25 = 24% (равенство только при ρ = 1). Эта комбинация даёт больше, чем <b>B</b> (12%), при риске не выше 24%. Значит, B тоже неэффективен.</p>
+<p><b>Ответ: B и E.</b> A, C, D по этим данным отбросить нельзя.</p>
+<p class="econ">Принцип: эффективная граница вогнута. Точка, лежащая ниже хорды между двумя другими портфелями, не может быть на границе.</p></div></details></div>
+
+<div class="task"><h3>Задача 2 · индекс + безрисковые бумаги</h3>
+<p>Фонд вкладывает только в индексный портфель (доходность 18%, СКО 30%) и безрисковые бумаги (8%). Как распределить средства для доходности а) 15%; б) 50%? Каковы СКО и бета?</p>
+<details><summary>Решение</summary><div class="sol">
+<div class="step">Формула</div><p>r<sub>p</sub> = r<sub>f</sub> + x·(r<sub>m</sub> − r<sub>f</sub>) = 8 + 10x; σ<sub>p</sub> = 30x; β<sub>p</sub> = x (у индекса β = 1, у безрискового — 0).</p>
+<div class="step">а) 15%</div><p>8 + 10x = 15 ⇒ x = 0,7: <b>70% в индекс, 30% в безрисковые</b>. σ = 21%, β = 0,7.</p>
+<div class="step">б) 50%</div><p>8 + 10x = 50 ⇒ x = 4,2: <b>420% в индекс, заём 320%</b> собственного капитала по 8%. σ = 126%, β = 4,2.</p>
+<p class="econ">Обе точки лежат на CML; коэффициент Шарпа у них одинаковый — (18 − 8)/30 = 0,33. Рычаг меняет масштаб риска, но не «качество» портфеля.</p></div></details></div>
+
+<div class="task"><h3>Задача 3 · короткая продажа</h3>
+<p>Вы купили акции A на 20 т.р. и продали без покрытия акции B на 10 т.р.; выручку вложили в A. ρ<sub>AB</sub> = 0,25. E[r<sub>A</sub>] = 13%, σ<sub>A</sub> = 10%; E[r<sub>B</sub>] = 5%, σ<sub>B</sub> = 18%. Найдите доходность и СКО портфеля.</p>
+<details><summary>Решение</summary><div class="sol">
+<div class="step">1. Веса</div><p>Собственный капитал 20 т.р. В A — 30 т.р., в B — −10 т.р. ⇒ x<sub>A</sub> = 1,5, x<sub>B</sub> = −0,5.</p>
+<div class="step">2. Доходность</div><p>1,5·13 − 0,5·5 = 19,5 − 2,5 = <b>17%</b>.</p>
+<div class="step">3. Риск</div><p>σ² = 1,5²·10² + 0,5²·18² + 2·1,5·(−0,5)·0,25·10·18 = 225 + 81 − 67,5 = 238,5; σ = <b>15,44%</b>.</p>
+<p class="econ">Положительная корреляция и короткая позиция по B частично хеджируют друг друга: ковариационный член отрицательный.</p></div></details></div>
+
+<div class="task"><h3>Задача 4 · CAPM и оценка цены</h3>
+<p>r<sub>f</sub> = 5%. Рыночный портфель: E[r] = 12%, СКО 12%. Актив A: ρ с рынком 0,9, СКО 20%. Актив B: ρ = 0,8, СКО 9%. Найдите требуемые доходности A и B. Аналитики ждут по A 16,5% — как оценена цена A?</p>
+<details><summary>Решение</summary><div class="sol">
+<div class="step">1. Беты</div><p>β = ρ·σ<sub>i</sub>/σ<sub>m</sub>: β<sub>A</sub> = 0,9·20/12 = 1,5; β<sub>B</sub> = 0,8·9/12 = 0,6.</p>
+<div class="step">2. CAPM</div><p>r<sub>A</sub> = 5 + 1,5·7 = <b>15,5%</b>; r<sub>B</sub> = 5 + 0,6·7 = <b>9,2%</b>.</p>
+<div class="step">3. Сравнение</div><p>Ожидается 16,5% &gt; требуемых 15,5%; α = +1%. A лежит выше SML ⇒ <b>недооценён</b>: покупатели будут поднимать цену, пока ожидаемая доходность не снизится до 15,5%.</p>
+<p class="econ">Ловушка: у A и B СКО сильно разные, но для требуемой доходности важна только бета — рыночная часть риска.</p></div></details></div>
+
+<div class="task"><h3>Задача 5 · CML и портфель минимального риска</h3>
+<p>E[r<sub>A</sub>] = 15%, E[r<sub>B</sub>] = 20%, σ<sub>A</sub> = 20%, σ<sub>B</sub> = 25%, ρ = 0,2, r<sub>f</sub> = 10%. 1) Уравнение CML и максимальная доходность на CML без рычага. 2) Портфель из A и B с минимальным риском.</p>
+<details><summary>Решение</summary><div class="sol">
+<p>cov = 0,2·20·25 = 100 (в %²).</p>
+<div class="step">1. Касательный портфель M</div><p>Веса пропорциональны C<sup>−1</sup>(r − r<sub>f</sub>). Для двух активов с избыточными доходностями e<sub>A</sub> = 5, e<sub>B</sub> = 10:</p>
+<p>x<sub>A</sub> ∝ e<sub>A</sub>σ<sub>B</sub>² − e<sub>B</sub>·cov = 3125 − 1000 = 2125; x<sub>B</sub> ∝ e<sub>B</sub>σ<sub>A</sub>² − e<sub>A</sub>·cov = 4000 − 500 = 3500.</p>
+<p>x<sub>A</sub> = 2125/5625 = 0,378; x<sub>B</sub> = 0,622.</p>
+<p>r<sub>M</sub> = 0,378·15 + 0,622·20 = <b>18,11%</b>; σ<sub>M</sub>² = 0,1427·400 + 0,3872·625 + 2·0,378·0,622·100 = 346,1 ⇒ σ<sub>M</sub> = 18,60%.</p>
+<p>Шарп = (18,11 − 10)/18,60 = 0,436. <b>CML: r = 10% + 0,436·σ.</b></p>
+<p>Без финансового рычага (без заёмных средств) на CML нельзя уйти правее M ⇒ максимальная доходность <b>18,11%</b>.</p>
+<div class="step">2. Портфель минимального риска</div><p>x<sub>A</sub> = (σ<sub>B</sub>² − cov)/(σ<sub>A</sub>² + σ<sub>B</sub>² − 2cov) = (625 − 100)/(400 + 625 − 200) = 525/825 = <b>0,636</b>; x<sub>B</sub> = 0,364.</p>
+<p>r = 0,636·15 + 0,364·20 = <b>16,82%</b>; σ² = σ<sub>A</sub>²σ<sub>B</sub>²(1 − ρ²)/825 = 290,9 ⇒ σ = <b>17,06%</b>.</p>
+<p class="econ">Риск портфеля минимального риска (17,06%) ниже риска каждой из акций (20% и 25%) при положительной корреляции — диверсификация работает без отрицательно коррелированных активов.</p></div></details></div>
+
+<div class="lit"><b>📚 Росс:</b> гл. 13 (ожидаемая доходность и дисперсия портфеля, диверсификация, бета, SML). Портфель минимального риска и CML подробно — Шарп «Инвестиции», Брейли–Майерс гл. 8.</div>
+</section>
+
+<!-- ============ ФОРМУЛЫ ============ -->
+<section class="part" id="formuly">
+<div class="head"><span class="eyebrow">Шпаргалка</span><h2>Все формулы на одном экране</h2></div>
+<div class="sheet">
+<div class="f"><div class="t">Эквивалентность ставок</div><math><msup><mrow><mo>(</mo><mn>1</mn><mo>+</mo><mfrac><msub><mi>r</mi><mi>m</mi></msub><mi>m</mi></mfrac><mo>)</mo></mrow><mi>m</mi></msup><mo>=</mo><mn>1</mn><mo>+</mo><mi>r</mi><mo>=</mo><msup><mi>e</mi><msub><mi>r</mi><mi>c</mi></msub></msup></math></div>
+<div class="f"><div class="t">Аннуитет</div><math><mi>A</mi><mo>=</mo><mi>R</mi><mfrac><mrow><mn>1</mn><mo>−</mo><msup><mrow><mo>(</mo><mn>1</mn><mo>+</mo><mi>r</mi><mo>)</mo></mrow><mrow><mo>−</mo><mi>n</mi></mrow></msup></mrow><mi>r</mi></mfrac></math></div>
+<div class="f"><div class="t">Непрерывный аннуитет</div><math><mi>A</mi><mo>=</mo><mfrac><mi>R</mi><msub><mi>r</mi><mi>c</mi></msub></mfrac><mo>(</mo><mn>1</mn><mo>−</mo><msup><mi>e</mi><mrow><mo>−</mo><msub><mi>r</mi><mi>c</mi></msub><mi>t</mi></mrow></msup><mo>)</mo></math></div>
+<div class="f"><div class="t">Перпетуитеты</div><math><mi>A</mi><mo>=</mo><mfrac><mi>R</mi><mi>r</mi></mfrac><mspace width="1.5em"/><mi>A</mi><mo>=</mo><mfrac><msub><mi>R</mi><mn>1</mn></msub><mrow><mi>r</mi><mo>−</mo><mi>g</mi></mrow></mfrac></math></div>
+<div class="f"><div class="t">Фишер</div><math><msub><mi>r</mi><mn>0</mn></msub><mo>=</mo><mfrac><mrow><mi>r</mi><mo>−</mo><mi>α</mi></mrow><mrow><mn>1</mn><mo>+</mo><mi>α</mi></mrow></mfrac><mspace width="1.5em"/><msub><mi>r</mi><mn>0</mn></msub><mo>=</mo><msub><mi>r</mi><mi>c</mi></msub><mo>−</mo><msub><mi>α</mi><mi>c</mi></msub></math></div>
+<div class="f"><div class="t">Спот и форвард</div><math><mo>(</mo><mn>1</mn><mo>+</mo><msub><mi>s</mi><mn>1</mn></msub><mo>)</mo><mo>(</mo><mn>1</mn><mo>+</mo><msub><mi>f</mi><mrow><mn>1</mn><mo>,</mo><mn>2</mn></mrow></msub><mo>)</mo><mo>=</mo><msup><mrow><mo>(</mo><mn>1</mn><mo>+</mo><msub><mi>s</mi><mn>2</mn></msub><mo>)</mo></mrow><mn>2</mn></msup></math></div>
+<div class="f"><div class="t">Безрисковый эквивалент</div><math><mi>C</mi><mi>E</mi><mo>=</mo><mi>E</mi><mo>[</mo><mi>F</mi><mi>V</mi><mo>]</mo><mo>−</mo><mi>P</mi><mi>V</mi><mo>(</mo><msub><mi>r</mi><mi>e</mi></msub><mo>−</mo><msub><mi>r</mi><mi>f</mi></msub><mo>)</mo></math></div>
+<div class="f"><div class="t">Рычаг</div><math><msub><mi>r</mi><mi>p</mi></msub><mo>=</mo><mi>x</mi><msub><mi>r</mi><mi>a</mi></msub><mo>+</mo><mo>(</mo><mn>1</mn><mo>−</mo><mi>x</mi><mo>)</mo><msub><mi>r</mi><mi>f</mi></msub><mspace width="1em"/><msub><mi>σ</mi><mi>p</mi></msub><mo>=</mo><mi>x</mi><msub><mi>σ</mi><mi>a</mi></msub></math></div>
+<div class="f"><div class="t">Риск портфеля из 2 активов</div><math><msubsup><mi>σ</mi><mi>p</mi><mn>2</mn></msubsup><mo>=</mo><msup><mi>x</mi><mn>2</mn></msup><msubsup><mi>σ</mi><mi>A</mi><mn>2</mn></msubsup><mo>+</mo><msup><mrow><mo>(</mo><mn>1</mn><mo>−</mo><mi>x</mi><mo>)</mo></mrow><mn>2</mn></msup><msubsup><mi>σ</mi><mi>B</mi><mn>2</mn></msubsup><mo>+</mo><mn>2</mn><mi>x</mi><mo>(</mo><mn>1</mn><mo>−</mo><mi>x</mi><mo>)</mo><mi>ρ</mi><msub><mi>σ</mi><mi>A</mi></msub><msub><mi>σ</mi><mi>B</mi></msub></math></div>
+<div class="f"><div class="t">Минимальный риск (2 актива)</div><math><msub><mi>x</mi><mi>A</mi></msub><mo>=</mo><mfrac><mrow><msubsup><mi>σ</mi><mi>B</mi><mn>2</mn></msubsup><mo>−</mo><mi>ρ</mi><msub><mi>σ</mi><mi>A</mi></msub><msub><mi>σ</mi><mi>B</mi></msub></mrow><mrow><msubsup><mi>σ</mi><mi>A</mi><mn>2</mn></msubsup><mo>+</mo><msubsup><mi>σ</mi><mi>B</mi><mn>2</mn></msubsup><mo>−</mo><mn>2</mn><mi>ρ</mi><msub><mi>σ</mi><mi>A</mi></msub><msub><mi>σ</mi><mi>B</mi></msub></mrow></mfrac></math></div>
+<div class="f"><div class="t">CML</div><math><mi>r</mi><mo>=</mo><msub><mi>r</mi><mi>f</mi></msub><mo>+</mo><mi>σ</mi><mfrac><mrow><msub><mi>r</mi><mi>m</mi></msub><mo>−</mo><msub><mi>r</mi><mi>f</mi></msub></mrow><msub><mi>σ</mi><mi>m</mi></msub></mfrac></math></div>
+<div class="f"><div class="t">Бета</div><math><mi>β</mi><mo>=</mo><mfrac><mrow><mtext>cov</mtext><mo>(</mo><msub><mi>r</mi><mi>i</mi></msub><mo>;</mo><msub><mi>r</mi><mi>m</mi></msub><mo>)</mo></mrow><msubsup><mi>σ</mi><mi>m</mi><mn>2</mn></msubsup></mfrac><mo>=</mo><mi>ρ</mi><mfrac><msub><mi>σ</mi><mi>i</mi></msub><msub><mi>σ</mi><mi>m</mi></msub></mfrac></math></div>
+<div class="f"><div class="t">CAPM / SML</div><math><mi>E</mi><mo>[</mo><msub><mi>r</mi><mi>i</mi></msub><mo>]</mo><mo>=</mo><msub><mi>r</mi><mi>f</mi></msub><mo>+</mo><msub><mi>β</mi><mi>i</mi></msub><mo>(</mo><mi>E</mi><mo>[</mo><msub><mi>r</mi><mi>m</mi></msub><mo>]</mo><mo>−</mo><msub><mi>r</mi><mi>f</mi></msub><mo>)</mo></math></div>
+<div class="f"><div class="t">Sortino</div><math><mfrac><mrow><mi>E</mi><mo>[</mo><mi>r</mi><mo>]</mo><mo>−</mo><mi>M</mi><mi>A</mi><mi>R</mi></mrow><mrow><mi>D</mi><mi>D</mi><mo>(</mo><mi>M</mi><mi>A</mi><mi>R</mi><mo>)</mo></mrow></mfrac></math></div>
+</div>
+</section>
+
+<footer>Собрано по материалам: «Лекции 1–6» (слайды лекций 1–2), «Семинар 1 с ответами», «Семинар 3 MPT». Решения задач без ответов в источнике (Семинар 3) составлены ассистентом — сверяй с разбором на семинаре. Темы 4–6 появятся, когда будут загружены материалы.</footer>
+</div>
+
+<script>
+(function(){
+  var items=[
+    ["Абсолютное большинство инвесторов в мире не склонны к риску.",true,"Это базовая предпосылка курса: за принятие риска инвесторы требуют премию. Поэтому кривые безразличия растут, а в «орлянку» с нулевой ожидаемой доходностью большинство играть не станет."],
+    ["Инвесторы предпочитают диверсифицированные компании, потому что они менее рискованные.",false,"Инвестор может диверсифицироваться сам и дёшево, купив акции разных компаний. Диверсификация внутри фирмы снижает только специфический риск, а за него рынок не платит премию. Поэтому сама по себе она не создаёт стоимости для акционеров."],
+    ["Если акции имеют корреляцию близкую к единице, то диверсификация не снижает риск.",false,"Риск не снижается только при ρ = 1 ровно: тогда σ портфеля — средневзвешенное СКО. При ρ близкой к 1, но меньше 1, риск снижается, хотя и слабо."],
+    ["Чтобы диверсификация сработала (риск портфеля меньше риска любого актива), нужны отрицательно коррелированные активы.",false,"Для двух активов достаточно ρ &lt; σ<sub>min</sub>/σ<sub>max</sub>. Пример из задачи 5: при ρ = +0,2 портфель минимального риска имеет σ = 17,1% — меньше, чем 20% и 25%."],
+    ["Если в портфеле есть отрицательно коррелированные активы, то его можно сделать безрисковым.",false,"Для двух активов нулевой риск достижим только при совершенной отрицательной корреляции ρ = −1. При −1 &lt; ρ &lt; 0 риск снижается, но остаётся положительным."],
+    ["Акция с низким СКО всегда вносит меньший риск в общий риск портфеля, чем акция с высоким СКО.",false,"Вклад бумаги в риск портфеля определяется её ковариацией с портфелем (бетой), а не собственным СКО. Акция с высоким СКО, но низкой корреляцией может добавлять меньше риска."],
+    ["Вклад акции в риск хорошо диверсифицированного портфеля зависит от её рыночного риска.",true,"Специфический риск в таком портфеле взаимно гасится; остаётся ковариационный, то есть рыночный риск, который измеряется бетой."],
+    ["Существуют условия, при которых портфельному инвестору стоит купить акцию с ожидаемой доходностью меньше безрисковой ставки.",true,"Да, если у акции отрицательная бета. По CAPM её требуемая доходность ниже r<sub>f</sub>: она работает как страховка — растёт, когда рынок падает, и снижает риск портфеля."],
+    ["В начале кризиса корреляции всех активов стремятся к единице.",true,"Эмпирический факт: в панике инвесторы продают всё подряд, и корреляции резко растут. Диверсификация слабеет именно тогда, когда нужна больше всего; это аргумент Мандельброта и Талеба против нормального распределения."]
+  ];
+  var box=document.getElementById('tf'),score=document.getElementById('tfscore'),done=0,right=0;
+  items.forEach(function(it,i){
+    var row=document.createElement('div');row.className='row';
+    row.innerHTML='<div class="q"><span class="n">'+(i+1)+'</span><div>'+it[0]+'</div></div><div class="btns"><button type="button" id="tf'+i+'t">Верно</button><button type="button" id="tf'+i+'f">Неверно</button></div><div class="exp" hidden></div>';
+    var bt=row.querySelector('#tf'+i+'t'),bf=row.querySelector('#tf'+i+'f'),exp=row.querySelector('.exp'),answered=false;
+    function pick(v,btn){
+      var ok=(v===it[1]);
+      if(!answered){answered=true;done++;if(ok)right++;}
+      bt.className='';bf.className='';
+      btn.className=ok?'right':'wrong';
+      (it[1]?bt:bf).className='right';
+      exp.innerHTML='<span class="v" style="color:var('+(it[1]?'--ok':'--bad')+')">'+(it[1]?'Верно':'Неверно')+'</span> · '+it[2];
+      exp.hidden=false;
+      score.textContent='Результат: '+right+' из '+done+(done===items.length?' — все утверждения разобраны':'');
+    }
+    bt.addEventListener('click',function(){pick(true,bt)});
+    bf.addEventListener('click',function(){pick(false,bf)});
+    box.appendChild(row);
+  });
+})();
+</script>
+</body>
+</html>
