@@ -1,3 +1,3 @@
 # terfin
 
-https://slepgy.github.io/terfin/
+https://slepgy.github.io/terfin/index.html
